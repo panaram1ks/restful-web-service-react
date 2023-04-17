@@ -46,9 +46,11 @@ public class TodoJpaResourceController {
 
     @PostMapping("/users/{username}/todos")
     public Todo createTodo(@PathVariable String username, @RequestBody Todo todo) {
-//        Todo createdTodo = todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), todo.isDone());
-        Todo createdTodo = todoRepository.save(todo);
-        return createdTodo;
+//        Change type id to Integer because int can't be null
+//        Jpa understand create or update if id=null->create else update
+        todo.setUsername(username);
+        todo.setId(null);
+        return todoRepository.save(todo);
     }
 
 }
